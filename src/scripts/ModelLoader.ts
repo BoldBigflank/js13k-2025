@@ -2,6 +2,7 @@ import * as THREE from 'three'
 
 import { floatVal, d2r } from './Utils'
 import { BB_DEFAULT_PALETTE } from './Colors'
+import { floorPowerOfTwo } from 'three/src/math/MathUtils.js'
 
 type CubeDef = [
     string,
@@ -153,7 +154,7 @@ const parseGeometry = (item: CubeDef): THREE.BufferGeometry => {
 
 type CreateModelOpts = {
     palette?: Partial<typeof BB_DEFAULT_PALETTE>
-    glow?: boolean
+    glow: boolean | number[]
 }
 
 export const createModel = (modelArray: Model, opts: CreateModelOpts): THREE.Group => {
@@ -185,8 +186,7 @@ export const createModel = (modelArray: Model, opts: CreateModelOpts): THREE.Gro
                 color: modelPalette[BB_PALETTE_KEYS[color] as keyof typeof modelPalette],
                 side: THREE.DoubleSide,
             }) // TODO: use color
-
-            if (glow) {
+            if (glow === true || (Array.isArray(glow) && glow.includes(color))) {
                 material.emissive = new THREE.Color(modelPalette[BB_PALETTE_KEYS[color] as keyof typeof modelPalette])
                 material.emissiveIntensity = 1.0
             }

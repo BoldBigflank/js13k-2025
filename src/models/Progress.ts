@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { createModel } from '../scripts/ModelLoader'
 import { progressModel } from './exported/progress'
-import { BLACK, BLUE, CAT_BLACK, LIGHT_GREY } from '../scripts/Colors'
+import { BLACK, BLUE, CAT_BLACK, LIGHT_GREY, MAGENTA } from '../scripts/Colors'
 import { Events } from '../libraries/Events'
 import { TYPE_COLORS } from '../scripts/Colors'
 import { GameProgress, SequenceType, SequenceTypes, SOLUTION_COLOR_HEX, TYPE_FONTSIZES } from '../scripts/DJPuzzle'
@@ -14,7 +14,9 @@ export const Progress = (): THREE.Object3D => {
             Green: LIGHT_GREY, // Case
             Blue: BLUE, // Base
             Silver: BLACK, // LEDs
+            Yellow: MAGENTA, // Glow
         },
+        glow: [1],
     }) as THREE.Object3D
     mesh.scale.set(0.1, 0.1, 0.1)
 

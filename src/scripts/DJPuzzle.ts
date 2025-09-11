@@ -71,25 +71,25 @@ export type Progress = {
 }
 
 export class DJPuzzle {
-    queue: number[]
+    _queue: number[]
     selected: Record<string, number>
-    vinyls: Vinyl[]
+    _vinyls: Vinyl[]
     progress: GameProgress
 
     constructor() {
-        this.queue = []
+        this._queue = []
         this.selected = {}
-        this.vinyls = []
+        this._vinyls = []
         this.reset()
     }
 
     addVinylByIndex(index: number) {
-        if (this.queue[0] === index) return
+        if (this._queue[0] === index) return
         // Add the vinyl to the front of the queue
-        this.queue.unshift(index)
+        this._queue.unshift(index)
 
         // Update progress state
-        const { color, artist, title } = this.vinyls[index]
+        const { color, artist, title } = this._vinyls[index]
         const colorIndex = SOLUTION_COLOR.indexOf(color)
         const artistIndex = SOLUTION_ARTIST.indexOf(artist)
         const titleIndex = SOLUTION_TITLE.indexOf(title)
@@ -146,7 +146,7 @@ export class DJPuzzle {
                   ? 'artist'
                   : 'title'
 
-        this.progress.bestComboUsedVinyls = this.queue.slice(0, this.progress.bestComboCount)
+        this.progress.bestComboUsedVinyls = this._queue.slice(0, this.progress.bestComboCount)
 
         this.progress.displayText = this.getDisplayText()
         Events.Instance.emit(ProgressEvent, this.progress)
@@ -163,10 +163,10 @@ export class DJPuzzle {
     getDisplayText() {
         const { currentIndex, correctCount, solved } = this.progress[this.progress.bestComboType]
         const solution = TYPE_SOLUTIONS[this.progress.bestComboType]
-        let sequence = this.queue
+        let sequence = this._queue
             .slice(0, correctCount)
             .reverse()
-            .map((index) => this.vinyls[index][this.progress.bestComboType])
+            .map((index) => this._vinyls[index][this.progress.bestComboType])
 
         if (correctCount === 0) return 'Select a record to play → → → → →'
         for (let i = 0; i < correctCount; i++) {
@@ -186,13 +186,13 @@ export class DJPuzzle {
             return '🎉 Sequence Complete 🎉'
         }
         if (sequence.length === 1) {
-            return `What follows ${this.vinyls[this.queue[0]][this.progress.bestComboType]} best? → → → → →`
+            return `What follows ${this._vinyls[this._queue[0]][this.progress.bestComboType]} best? → → → → →`
         }
         return sequence.join('→')
     }
 
     reset() {
-        this.queue = []
+        this._queue = []
         this.selected = {}
         const [COLOR_SOLUTION, ARTIST_SOLUTION, TITLE_SOLUTION] = SOLUTION_INDEXES
         this.progress = {
@@ -216,7 +216,7 @@ export class DJPuzzle {
             bestComboUsedVinyls: [],
             displayText: 'Select a record to play → → → → →',
         }
-        this.vinyls = SOLUTION_COLOR.map((color, index) => {
+        this._vinyls = SOLUTION_COLOR.map((color, index) => {
             return {
                 index,
                 color,
@@ -226,15 +226,15 @@ export class DJPuzzle {
         })
 
         COLOR_SOLUTION.forEach((correctPosition, index) => {
-            this.vinyls[correctPosition].color = SOLUTION_COLOR[index]
+            this._vinyls[correctPosition].color = SOLUTION_COLOR[index]
         })
 
         ARTIST_SOLUTION.forEach((correctPosition, index) => {
-            this.vinyls[correctPosition].artist = SOLUTION_ARTIST[index]
+            this._vinyls[correctPosition].artist = SOLUTION_ARTIST[index]
         })
 
         TITLE_SOLUTION.forEach((correctPosition, index) => {
-            this.vinyls[correctPosition].title = SOLUTION_TITLE[index]
+            this._vinyls[correctPosition].title = SOLUTION_TITLE[index]
         })
 
         Events.Instance.emit(ProgressEvent, this.progress)

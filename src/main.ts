@@ -97,14 +97,14 @@ const initGame = async () => {
     fishSwirl.position.set(0, 0, -10)
     scene.attach(fishSwirl)
 
-    djPuzzle.vinyls.forEach((record, i) => {
+    djPuzzle._vinyls.forEach((record, i) => {
         const mesh = Vinyl(record)
         const originalPosition = new THREE.Vector3(0.7, 1.15, -0.2 - 0.125 * i)
         mesh.position.copy(originalPosition)
         mesh.userData.originalPosition = originalPosition
         mesh.userData.isPickable = true
         mesh.userData.recordIndex = i
-        mesh.userData.returnToOriginalPosition = () => {
+        mesh.userData.endMove = () => {
             scene.attach(mesh)
             AnimationFactory.Instance.cancelAnimation(mesh)
             AnimationFactory.Instance.animateTransform({
@@ -152,8 +152,8 @@ const initGame = async () => {
                 delete djPuzzle.selected[controller.id]
                 controller.userData.selected = undefined
                 pad.children.forEach((child: THREE.Object3D) => {
-                    if (child.userData.returnToOriginalPosition) {
-                        child.userData.returnToOriginalPosition()
+                    if (child.userData.endMove) {
+                        child.userData.endMove()
                     }
                 })
                 // Move any other meshes
@@ -179,7 +179,7 @@ const initGame = async () => {
                 return
             } else {
                 // Else move back to its original position
-                mesh.userData.returnToOriginalPosition()
+                mesh.userData.endMove()
                 controller.userData.selected = undefined
             }
         }
