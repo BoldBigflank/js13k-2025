@@ -97,7 +97,7 @@ const initGame = async () => {
     fishSwirl.position.set(0, 0, -10)
     scene.attach(fishSwirl)
 
-    djPuzzle._vinyls.forEach((record, i) => {
+    djPuzzle.vinyls.forEach((record, i) => {
         const mesh = Vinyl(record)
         const originalPosition = new THREE.Vector3(0.7, 1.15, -0.2 - 0.125 * i)
         mesh.position.copy(originalPosition)
@@ -252,6 +252,19 @@ const initGame = async () => {
     djPuzzle.reset()
 
     if (DEBUG) {
+        // // Cover art
+        // const titleVinyl = Vinyl({
+        //     color: 'Red',
+        //     artist: 'Alex Swan',
+        //     title: 'AL13YCAT',
+        // })
+        // scene.add(titleVinyl)
+        // camera.position.set(0, 0, 0)
+        // titleVinyl.position.set(0, 0, -0.3)
+        // arenaMesh.position.set(0, -100, 0)
+        // camera.lookAt(new THREE.Vector3(0, 0, -1))
+        // document.getElementById('VRButton')!.style.display = 'none'
+
         const debugScreen = DebugScreen()
         debugScreen.position.set(0, 1, 5)
         debugScreen.rotation.set(0, Math.PI, 0)
