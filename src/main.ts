@@ -18,12 +18,13 @@ import {
     DownbeatEvent,
     FishJuggledEvent,
     InteractiveObject3D,
+    ProgressEvent,
     RoomGlowEvent,
     SplashEvent,
     TickEvent,
 } from './types'
 import { Splash } from './models/Splash'
-import { sleep, DEBUG, Intro, LocalStorageKey } from './scripts/Utils'
+import { sleep, DEBUG, Intro, LocalStorageKey, V3_ZERO } from './scripts/Utils'
 import { TextMaterial } from './scripts/TextureUtils'
 
 const CLOCK = new THREE.Clock()
@@ -128,7 +129,7 @@ const initGame = async () => {
                 AnimationFactory.Instance.animateTransform({
                     mesh,
                     end: {
-                        position: new THREE.Vector3(0, 0, 0),
+                        position: V3_ZERO,
                         rotation: new THREE.Euler(0, Math.PI / 2, 0),
                     },
                     duration: 60,
@@ -337,10 +338,7 @@ function onControllerConnected(event) {
     // line
     let line = controller.getObjectByName('l')
     if (!line) {
-        const geometry = new THREE.BufferGeometry().setFromPoints([
-            new THREE.Vector3(0, 0, 0),
-            new THREE.Vector3(0, 0, -1),
-        ])
+        const geometry = new THREE.BufferGeometry().setFromPoints([V3_ZERO, new THREE.Vector3(0, 0, -1)])
         line = new THREE.Line(geometry)
         line.material.color.set(RED)
         line.name = 'l'
@@ -475,12 +473,12 @@ function setupButton() {
             await initGame()
             setLoading(false)
             // Update the UI
-            document.getElementById('intro')!.style.display = 'none'
+            document.getElementById('i')!.style.display = 'none'
             document.getElementById('c')!.style.display = 'block'
         }
     const intro = document.createElement('p')
-    intro.innerHTML = Intro.join('\n')
-    document.getElementById('intro')?.insertBefore(intro, p)
+    intro.innerHTML = Intro.join('<br>')
+    document.getElementById('i')?.insertBefore(intro, b)
 }
 
 if (document.readyState === 'loading') {

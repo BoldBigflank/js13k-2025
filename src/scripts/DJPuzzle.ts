@@ -1,5 +1,5 @@
 import { Events } from '../libraries/Events'
-import { ComboBrokenEvent, DebugEvent } from '../types'
+import { ComboBrokenEvent, DebugEvent, ProgressEvent } from '../types'
 import { BLUE, GREEN, ORANGE, RED, VIOLET, YELLOW } from './Colors'
 
 export const SOLUTION_COLOR_HEX = [RED, ORANGE, YELLOW, GREEN, BLUE, VIOLET]

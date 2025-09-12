@@ -6,6 +6,7 @@ import { Events } from '../libraries/Events'
 import { TYPE_COLORS } from '../scripts/Colors'
 import { GameProgress, SequenceType, SequenceTypes, SOLUTION_COLOR_HEX, TYPE_FONTSIZES } from '../scripts/DJPuzzle'
 import { TextMaterial } from '../scripts/TextureUtils'
+import { ProgressEvent } from '../types'
 
 export const Progress = (): THREE.Object3D => {
     const mesh = createModel(progressModel(), {

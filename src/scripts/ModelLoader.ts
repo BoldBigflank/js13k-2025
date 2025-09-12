@@ -132,24 +132,25 @@ const parseCylinderGeometry = (item: CubeDef): THREE.BufferGeometry => {
     return geometry
 }
 
+// Shape code to geometry parser mapping
+const SHAPE_PARSERS = {
+    c: parseCubeGeometry,
+    s: parseSphereGeometry,
+    p: parsePlaneGeometry,
+    cy: parseCylinderGeometry,
+    py: parsePyramidGeometry,
+} as const
+
 // Helper function to parse geometry from item string
 const parseGeometry = (item: CubeDef): THREE.BufferGeometry => {
     const [shape] = item
+    const parser = SHAPE_PARSERS[shape as keyof typeof SHAPE_PARSERS]
 
-    switch (shape) {
-        case 'c':
-            return parseCubeGeometry(item)
-        case 's':
-            return parseSphereGeometry(item)
-        case 'p':
-            return parsePlaneGeometry(item)
-        case 'cy':
-            return parseCylinderGeometry(item)
-        case 'py':
-            return parsePyramidGeometry(item)
-        default:
-            throw new Error(`Unknown shape: ${shape}`)
+    if (!parser) {
+        throw new Error(`Unknown shape: ${shape}`)
     }
+
+    return parser(item)
 }
 
 type CreateModelOpts = {

@@ -10,6 +10,7 @@ import { GameOverDialog } from './GameOverDialog'
 import { Progress } from './Progress'
 import { Runner } from './Runner'
 import { BLUE, CAT_BLACK, CAT_GREY, DARK_GREY, GREY, LIGHT_GREY, MAGENTA, WALL_GREEN } from '../scripts/Colors'
+import { Lasers } from './Lasers'
 
 export const Arena = (renderer: THREE.WebGLRenderer): THREE.Object3D => {
     // Main arena
@@ -53,6 +54,14 @@ export const Arena = (renderer: THREE.WebGLRenderer): THREE.Object3D => {
     catMesh2.position.set(3, 1, 0)
     catMesh2.rotation.set(0, Math.PI / 4, 0)
     mesh.attach(catMesh2)
+
+    // Lasers
+    const lasers = Lasers()
+    mesh.add(lasers)
+    lasers.position.set(-2.35, 1.9, -0.55)
+    const lasers2 = Lasers()
+    lasers2.position.set(2.5, 1.6, -0.5)
+    mesh.add(lasers2)
 
     const cassetteMesh = Cassette()
     mesh.add(cassetteMesh)

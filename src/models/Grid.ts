@@ -3,8 +3,8 @@ import { Events } from '../libraries/Events'
 import { GameProgress } from '../scripts/DJPuzzle'
 import { AnimationFactory, easeInOutCubic } from '../scripts/AnimationFactory'
 import { TYPE_COLORS } from '../scripts/Colors'
-import { waveHeight } from '../scripts/Utils'
-import { TickEvent } from '../types'
+import { V3_ZERO, waveHeight } from '../scripts/Utils'
+import { ProgressEvent, TickEvent } from '../types'
 
 export class Grid {
     parent: THREE.Group
@@ -43,7 +43,7 @@ export class Grid {
                 AnimationFactory.Instance.animateTransform({
                     mesh: this._mesh,
                     end: {
-                        position: new THREE.Vector3(0, 0, 0),
+                        position: V3_ZERO,
                     },
                     ease: easeInOutCubic,
                     duration: 2000,
