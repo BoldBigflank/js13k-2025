@@ -17,7 +17,6 @@ export const Tuna = (): THREE.Object3D => {
     mesh.scale.set(0.03125, 0.03125, 0.03125)
     mesh.userData.isPickable = true
     mesh.onPointerPick = (controller) => {
-        PickupSFX()
         Events.Instance.emit(LaserEvent)
     }
     return mesh

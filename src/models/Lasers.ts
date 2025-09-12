@@ -4,6 +4,7 @@ import { RED } from '../scripts/Colors'
 import { AnimationFactory } from '../scripts/AnimationFactory'
 import { LaserEvent } from '../types'
 import { V3_ZERO } from '../scripts/Utils'
+import { LaserSFX } from '../audio/music'
 
 export const Lasers = (): THREE.Object3D => {
     const parent = new THREE.Group()
@@ -21,13 +22,14 @@ export const Lasers = (): THREE.Object3D => {
     parent.visible = false
 
     Events.Instance.on(LaserEvent, () => {
-        parent.rotation.set(Math.PI / 2, 0, 0)
+        LaserSFX()
+        parent.rotation.set(Math.PI / 4, 0, 0)
         parent.visible = true
         AnimationFactory.Instance.cancelAnimation(parent)
         AnimationFactory.Instance.animateTransform({
             mesh: parent,
             end: {
-                rotation: new THREE.Euler(-Math.PI / 2, 0, 0),
+                rotation: new THREE.Euler(-Math.PI / 4, 0, 0),
             },
             duration: 1999,
         }).then(() => (parent.visible = false))

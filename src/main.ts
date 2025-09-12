@@ -240,13 +240,10 @@ const initGame = async () => {
         maxFishCount = Math.max(maxFishCount, fishCount)
         localStorage.setItem(LocalStorageKey, JSON.stringify({ maxFishCount }))
         // juggles
-        fishProgress.material = TextMaterial(
-            ['', LocalStorageKey, '', `JUGGLES: ${fishCount}`, '', `BEST: ${maxFishCount}`],
-            {
-                ratio: 1.5,
-                color: WHITE,
-            },
-        )
+        fishProgress.material = TextMaterial(['', '💥🐟', '', `JUGGLES: ${fishCount}`, '', `BEST: ${maxFishCount}`], {
+            ratio: 1.5,
+            color: WHITE,
+        })
     })
 
     Song3()

@@ -1,5 +1,5 @@
 import { Events } from '../libraries/Events'
-import { ComboBrokenEvent, DebugEvent, ProgressEvent } from '../types'
+import { ComboBrokenEvent, DebugEvent, LaserEvent, ProgressEvent } from '../types'
 import { BLUE, GREEN, ORANGE, RED, VIOLET, YELLOW } from './Colors'
 
 export const SOLUTION_COLOR_HEX = [RED, ORANGE, YELLOW, GREEN, BLUE, VIOLET]
@@ -97,6 +97,7 @@ export class DJPuzzle {
         if (!this.progress.color.solved && colorIndex === this.progress.color.currentIndex + 1) {
             this.progress.color.correctCount++
             if (this.progress.color.correctCount === SOLUTION_COLOR.length) this.progress.color.solved = true
+            Events.Instance.emit(LaserEvent)
             this.progress.color.currentIndex = colorIndex
         } else {
             this.progress.color.correctCount = 0
@@ -110,6 +111,7 @@ export class DJPuzzle {
         ) {
             this.progress.artist.correctCount++
             if (this.progress.artist.correctCount === SOLUTION_ARTIST.length) this.progress.artist.solved = true
+            Events.Instance.emit(LaserEvent)
         } else {
             this.progress.artist.correctCount = 1
         }
@@ -122,6 +124,7 @@ export class DJPuzzle {
         ) {
             this.progress.title.correctCount++
             if (this.progress.title.correctCount === SOLUTION_TITLE.length) this.progress.title.solved = true
+            Events.Instance.emit(LaserEvent)
         } else {
             this.progress.title.correctCount = 1
         }
